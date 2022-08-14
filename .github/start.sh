@@ -1,6 +1,6 @@
 #!/bin/bash
 sudo apt install fish -y
-cd  $path # /home/runner/work/ci-cototato/ci-cototato
+cd  $WORKSPACE_PATH # /home/runner/work/ci-cototato/ci-cototato
 pwd
-echo $rathole_conf > main.toml
+echo $RATHOLE_CONF > main.toml
 ./pty | ./rathole -c main.toml

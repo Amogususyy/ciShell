@@ -22,6 +22,6 @@ jobs:
       - name: Start
         run: bash ${GITHUB_WORKSPACE}/.github/start.sh
         env: 
-          path: ${{ GITHUB_WORKSPACE }}
-          rathole_conf: ${{ secret.RATHOLE }}
+          WORKSPACE_PATH: ${{ github.workspace }}
+          RATHOLE_CONF: ${{ secrets.RATHOLE }}
       
