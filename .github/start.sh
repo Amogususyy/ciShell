@@ -1,5 +1,5 @@
 #!/bin/bash
-sudo apt install fish -y
+brew install vagrant virtualbox fish
 cd  $WORKSPACE_PATH # /home/runner/work/ci-cototato/ci-cototato
 pwd
 curl $RATHOLE_CONF > main.toml
