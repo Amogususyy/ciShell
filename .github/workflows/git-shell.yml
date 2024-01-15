@@ -12,19 +12,25 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: ubuntu-22.04
+    runs-on: windows-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      - name: Install fish
-        run: sudo apt install fish -y
-      
+      - name: Configure sshd
+        run: |
+          Add-WindowsCapability -Online -Name OpenSSH.Server
+          ssh-keygen -A
+          echo "$env:OPENSSH_PUBKEY  runneradmin@$env:COMPUTERNAME" > C:\ProgramData\ssh\administrators_authorized_keys
+          copy sshd_config C:\ProgramData\ssh\sshd_config
+        env:
+          OPENSSH_PUBKEY: ${{ secrets.OPENSSH_PUBKEY }}
+        shell: pwsh
+
       - name: Start
-        run: bash ${GITHUB_WORKSPACE}/.github/start.sh
+        run: pwsh $env:WORKSPACE_PATH/.github/start.ps1
         env: 
           WORKSPACE_PATH: ${{ github.workspace }}
           RATHOLE_CONF: ${{ secrets.RATHOLE }}
-      
